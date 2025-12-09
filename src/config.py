@@ -17,7 +17,7 @@ DPI_RENDER = 300
 BOX_COLOR = (1, 0, 0)   # Rojo
 
 # Grosor del rectángulo
-BOX_THICKNESS = 1
+BOX_THICKNESS = 1.0
 
 # Ruta del ejecutable de Tesseract (Windows)
 # (Normalmente detecta automáticamente si está en PATH)

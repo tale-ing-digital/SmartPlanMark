@@ -43,6 +43,9 @@ def process_assignment(row, pdf_master):
 def main():
     print("=== SmartPlanMark – Iniciando procesamiento ===")
 
+    # Crear carpeta de salida si no existe
+    os.makedirs(DATA_OUTPUT, exist_ok=True)
+
     # Definir rutas de entrada
     csv_path = os.path.join(DATA_INPUT, "asignaciones.csv")
     pdf_master = os.path.join(DATA_INPUT, "plano_maestro.pdf")

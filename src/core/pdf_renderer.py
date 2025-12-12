@@ -6,7 +6,7 @@ import os
 # ==========================================
 # 1) Exportar página con recuadro (SIN REFLOW)
 # ==========================================
-def draw_highlight_box(pdf_path, bbox, output_name="output.pdf", page_number=0):
+def draw_highlight_box(pdf_path, bbox, output_name="output.pdf", page_number=0, output_dir=None):
     """
     Dibuja un rectángulo en las coordenadas exactas detectadas por OCR.
     
@@ -24,6 +24,7 @@ def draw_highlight_box(pdf_path, bbox, output_name="output.pdf", page_number=0):
         bbox: Tupla (x, y, w, h) con coordenadas detectadas
         output_name: Nombre del archivo de salida
         page_number: Número de página (default: 0)
+        output_dir: Directorio de salida (default: DATA_OUTPUT)
     
     Returns:
         str: Ruta del PDF generado
@@ -66,7 +67,8 @@ def draw_highlight_box(pdf_path, bbox, output_name="output.pdf", page_number=0):
 
     # Guardar sin wrap ni optimización que modifique la estructura interna
     # clean=False evita reorganización que causa is_wrapped=True
-    output_path = os.path.join(DATA_OUTPUT, output_name)
+    target_dir = output_dir if output_dir else DATA_OUTPUT
+    output_path = os.path.join(target_dir, output_name)
     out.save(
         output_path,
         deflate=True,       # comprime sin pérdida
@@ -85,14 +87,20 @@ def draw_highlight_box(pdf_path, bbox, output_name="output.pdf", page_number=0):
 # ==========================================
 # 2) Función de conveniencia para guardar copias
 # ==========================================
-def save_copy(pdf_path, new_name):
+def save_copy(pdf_path, new_name, output_dir=None):
     """
     Clona el PDF original y guarda una copia con nuevo nombre.
     Mantiene el contenido 100% vectorial sin degradación.
+    
+    Args:
+        pdf_path: Ruta al PDF original
+        new_name: Nombre del nuevo archivo
+        output_dir: Directorio de salida (default: DATA_OUTPUT)
     """
 
     doc = fitz.open(pdf_path)
-    output_path = os.path.join(DATA_OUTPUT, new_name)
+    target_dir = output_dir if output_dir else DATA_OUTPUT
+    output_path = os.path.join(target_dir, new_name)
     
     # Guardar con parámetros que preservan estructura original
     doc.save(
